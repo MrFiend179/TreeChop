@@ -1,5 +1,14 @@
 ![ALT](https://raw.githubusercontent.com/MrFiend179/TreeChop/master/treechopmnthmb.PNG)
 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MrFiend179/TreeChop/total?style=for-the-badge)
+![Discord](https://img.shields.io/discord/988824696860573798?style=for-the-badge&logo=discord&color=blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/MrFiend179/TreeChop?style=for-the-badge&color=yellow)
+![GitHub License](https://img.shields.io/github/license/MrFiend179/TreeChop?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/MrFiend179/TreeChop?style=for-the-badge&color=gold)
+![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCha9zIeWFX58QASlKFW3CwQ?style=for-the-badge&logo=youtube&color=red)
+
+
+
 # Tree Chop
 
 Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with spruce trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
