@@ -1,0 +1,23 @@
+name: TreeChop
+version: '${project.version}'
+main: mc.treechop.treechop.TreeChop
+api-version: 1.20
+authors: [ MrFiend179 ]
+description: chops tree maintainer
+website: flubel.tech
+commands:
+  treechopper:
+    description: "Enable or disable TreeChopper or set world name."
+    usage: "/treechopper <enable|disable|worldname>"
+  enable:
+    description: "Enable TreeChopper."
+    usage: "/treechopper enable"
+  disable:
+    description: "Disable TreeChopper."
+    usage: "/treechopper disable"
+  forcestop:
+    description: "Forcefully stops TreeChopper."
+    usage: "/treechopper forcestop"
+  worldname:
+    description: "Set the world name for TreeChopper."
+    usage: "/treechopper worldname <name>"
