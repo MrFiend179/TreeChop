@@ -39,13 +39,20 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 - **Description:** Stops the TreeChop plugin completely.
 - **Usage:** `/treechopper forcestop`
 
-### 4 /treechopper worldname <world_name>
+### 4 /treechopper worldname [world_name]
 - **Description:** Sets the name of the world in which plugin will work.
 - **Usage:** `/treechopper worldname <world_name>`
 #### 4.1 example:
 - 4.1.1 `/treechopper worldname lobby` sets world in which plugin will work to **lobby**
 - 4.1.2 `/treechopper worldname world` sets world in which plugin will work to **world**
 - 4.1.3 `/treechopper worldname myworld` sets world in which plugin will work to **myworld**
+
+### 5 /treechopper reward [amount]
+- **Description:** Sets the amount of money Players will receive. 
+- **Usage:** `/treechopper reward <amount>`
+#### 5.1 example:
+- 5.1.1 `/treechopper reward 50` sets the reward amount player will receive to **50**
+- 5.1.2 `/treechopper reward 150` sets the reward amount player will receive to **150**
 
 # Permission
 You need to use a permissions plugin such as luckperms to handle permission otherwise it won't work.

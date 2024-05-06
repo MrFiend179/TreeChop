@@ -23,6 +23,7 @@ import java.util.*;
 public final class TreeChop extends JavaPlugin implements Listener {
     private boolean isEnabled = true;
     private String worldName = "";
+    private int rewardAmount = 50;
     private final Map<Location, Integer> pillarCounters = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLeavesMap = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLogsMap = new HashMap<>();
@@ -34,7 +35,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#              Tree Chopper v1.0              #");
+        getLogger().info("#             Tree Chopper v1.0.1             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -48,7 +49,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#              Tree Chopper v1.0              #");
+        getLogger().info("#             Tree Chopper v1.0.1             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -60,7 +61,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("treechopper")) {
             if (args.length == 0) {
-                sender.sendMessage("Usage: /treechopper <enable|disable|worldname>");
+                sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward>");
                 return true;
             }
 
@@ -89,8 +90,21 @@ public final class TreeChop extends JavaPlugin implements Listener {
                         sender.sendMessage("Usage: /treechopper worldname <name>");
                     }
                     break;
+                case "reward":
+                    if (args.length >= 2) {
+                        try {
+                            rewardAmount = Integer.parseInt(args[1]);
+                            sender.sendMessage("§a§l| §aTreeChopper reward amount set to: §6§l" + rewardAmount);
+                            saveConfig();
+                        } catch (NumberFormatException e) {
+                            sender.sendMessage("Please provide a valid number for the reward amount.");
+                        }
+                    } else {
+                        sender.sendMessage("Usage: /treechopper reward <amount>");
+                    }
+                    break;
                 default:
-                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname>");
+                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward>");
             }
             return true;
         }
@@ -106,7 +120,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 String input = args[0].toLowerCase();
 
                 // Add subcommand suggestions based on input
-                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname");
+                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname", "reward");
                 for (String subCommand : subCommands) {
                     if (subCommand.startsWith(input)) {
                         suggestions.add(subCommand);
@@ -127,7 +141,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
             World world = event.getBlock().getWorld();
             String eventName = worldName.equalsIgnoreCase(world.getName()) ? worldName : "default";
 
-            if(!event.getPlayer().hasPermission("TreeChopper.ChopRewards")){
+            if(!event.getPlayer().hasPermission("TreeChopper.ChopRewards") && isLog(block.getType()) && world.getName().equalsIgnoreCase(eventName)){
                 event.getPlayer().sendMessage("§c§l| You don't have permission to do this.");
                 return;
             }
@@ -149,9 +163,10 @@ public final class TreeChop extends JavaPlugin implements Listener {
                         event.getBlock().setType(Material.SPRUCE_LOG);
                     }, 2);
                     if (counter == 0) {
-//                        event.getPlayer().sendMessage("§a§l| §aYou received 100$ for Chopping a tree.");
                         String Player = event.getPlayer().getName();
-                        getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " 60");
+                        int rewardamountplr = rewardAmount;
+                        getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " " + rewardamountplr);
+//                        getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " 60");
                         pillarCounters.remove(bottomLocation);
 
 
@@ -211,7 +226,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                     }
                                 }
                             }
-                            int radiusclr = 8;
+                            int radiusclr = 5;
                             getServer().getScheduler().runTaskLater(this, () -> {
                                 for (int xOffset = -radiusclr; xOffset <= radiusclr; xOffset++) {
                                     for (int yOffset = -height; yOffset <= height; yOffset++) {
@@ -365,15 +380,17 @@ public final class TreeChop extends JavaPlugin implements Listener {
         FileConfiguration config = getConfig();
         isEnabled = config.getBoolean("enabled", true);
         worldName = config.getString("worldName", "lobby");
+        rewardAmount = config.getInt("rewardAmount", 50); // Load reward amount with default value
     }
 
     public void saveConfig() {
         FileConfiguration config = getConfig();
         config.set("enabled", isEnabled);
         config.set("worldName", worldName);
+        config.set("rewardAmount", rewardAmount);
 
         try {
-            config.save(getDataFolder() + File.separator + "config.yml");
+            config.save(new File(getDataFolder(), "config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
