@@ -48,7 +48,7 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 - 4.1.3 `/treechopper worldname myworld` sets world in which plugin will work to **myworld**
 
 ### 5 /treechopper reward [amount]
-- **Description:** Sets the amount of money Players will receive. 
+- **Description:** Sets the amount of money Players will receive.
 - **Usage:** `/treechopper reward <amount>`
 #### 5.1 example:
 - 5.1.1 `/treechopper reward 50` sets the reward amount player will receive to **50**
@@ -71,9 +71,9 @@ You need to use a permissions plugin such as luckperms to handle permission othe
 # Rewards
 The rewards are given when a spruce tree is broken succesfully, after which a console command is issue which gives the player money using essentialsX economy
 
-`eco give %player% 60`
+`eco give %player% <reward_amount>`
 
-Every player gets **$60** for chopping a tree succesfully.
+Every player gets **$50** for chopping a tree succesfully by default. It can be changed via config or command.
 
 # How to use
 - Install EssentialsX and TreeChop and put them in your plugins folder

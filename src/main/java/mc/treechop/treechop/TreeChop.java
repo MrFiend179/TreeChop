@@ -35,7 +35,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.1             #");
+        getLogger().info("#             Tree Chopper v1.0.2             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -49,7 +49,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.1             #");
+        getLogger().info("#             Tree Chopper v1.0.2             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -227,12 +227,23 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                 }
                             }
                             int radiusclr = 5;
+                            int radiusclr2 = 7;
                             getServer().getScheduler().runTaskLater(this, () -> {
                                 for (int xOffset = -radiusclr; xOffset <= radiusclr; xOffset++) {
                                     for (int yOffset = -height; yOffset <= height; yOffset++) {
                                         for (int zOffset = -radiusclr; zOffset <= radiusclr; zOffset++) {
                                             Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
-                                            if (relativeBlock.getType() == Material.SPRUCE_LOG || relativeBlock.getType() == Material.SPRUCE_LEAVES) {
+                                            if (relativeBlock.getType() == Material.SPRUCE_LEAVES) {
+                                                relativeBlock.setType(Material.AIR);
+                                            }
+                                        }
+                                    }
+                                }
+                                for (int xOffset = -radiusclr2; xOffset <= radiusclr2; xOffset++) {
+                                    for (int yOffset = -height; yOffset <= height; yOffset++) {
+                                        for (int zOffset = -radiusclr2; zOffset <= radiusclr2; zOffset++) {
+                                            Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
+                                            if (relativeBlock.getType() == Material.SPRUCE_LOG) {
                                                 relativeBlock.setType(Material.AIR);
                                             }
                                         }
