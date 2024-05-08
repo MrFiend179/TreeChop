@@ -24,6 +24,9 @@ public final class TreeChop extends JavaPlugin implements Listener {
     private boolean isEnabled = true;
     private String worldName = "";
     private int rewardAmount = 50;
+    private String treetype = "";
+    private String MainTypeLog = "";
+    private String MainTypeLeaves = "";
     private final Map<Location, Integer> pillarCounters = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLeavesMap = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLogsMap = new HashMap<>();
@@ -35,7 +38,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.2             #");
+        getLogger().info("#             Tree Chopper v1.0.3             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -43,13 +46,37 @@ public final class TreeChop extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         loadConfig();
         getCommand("treechopper").setTabCompleter(this);
+
+        if (Objects.equals(treetype, "oak")) {
+            MainTypeLog = "OAK_LOG";
+            MainTypeLeaves = "OAK_LEAVES";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
+        } else if (Objects.equals(treetype, "spruce")) {
+            MainTypeLog = "SPRUCE_LOG";
+            MainTypeLeaves = "SPRUCE_LEAVES";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
+        } else if (Objects.equals(treetype, "birch")) {
+            MainTypeLog = "BIRCH_LOG";
+            MainTypeLeaves = "BIRCH_LEAVES";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
+        } else if (Objects.equals(treetype, "jungle")) {
+            getLogger().info("----------------(Jungle tree type is not supported.)----------------");
+        } else if (Objects.equals(treetype, "acacia")) {
+            MainTypeLog = "ACACIA_LOG";
+            MainTypeLeaves = "ACACIA_LEAVES";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
+        } else if (Objects.equals(treetype, "dark_oak")) {
+            MainTypeLog = "DARK_OAK_LOG";
+            MainTypeLeaves = "DARK_OAK_LEAVES";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
+        }
     }
 
     @Override
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.2             #");
+        getLogger().info("#             Tree Chopper v1.0.3             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -60,11 +87,15 @@ public final class TreeChop extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("treechopper")) {
+
+            if (!sender.hasPermission("TreeChopper.Command")) {
+                sender.sendMessage("§c§l| §cThere is no such command. Type /help to view available commands");
+                return true;
+            }
             if (args.length == 0) {
                 sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward>");
                 return true;
             }
-
             String subCommand = args[0].toLowerCase();
             switch (subCommand) {
                 case "enable":
@@ -103,8 +134,45 @@ public final class TreeChop extends JavaPlugin implements Listener {
                         sender.sendMessage("Usage: /treechopper reward <amount>");
                     }
                     break;
+                case "type":
+                    if (args.length >= 2) {
+                        treetype = args[1];
+                        if (Objects.equals(treetype, "oak")) {
+                            MainTypeLog = "OAK_LOG";
+                            MainTypeLeaves = "OAK_LEAVES";
+                            sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                        } else if (Objects.equals(treetype, "spruce")) {
+                            MainTypeLog = "SPRUCE_LOG";
+                            MainTypeLeaves = "SPRUCE_LEAVES";
+                            sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                        } else if (Objects.equals(treetype, "birch")) {
+                            MainTypeLog = "BIRCH_LOG";
+                            MainTypeLeaves = "BIRCH_LEAVES";
+                            sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                        } else if (Objects.equals(treetype, "jungle")) {
+                            sender.sendMessage("§c§l| §cJungle trees are not supported.");
+                            sender.sendMessage("§a§l| §aAvailable tree types: oak, spruce, birch, acacia, dark_oak");
+                        } else if (Objects.equals(treetype, "acacia")) {
+                            MainTypeLog = "ACACIA_LOG";
+                            MainTypeLeaves = "ACACIA_LEAVES";
+                            sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                        } else if (Objects.equals(treetype, "dark_oak")) {
+                            MainTypeLog = "DARK_OAK_LOG";
+                            MainTypeLeaves = "DARK_OAK_LEAVES";
+                            sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                        } else {
+                            sender.sendMessage("§c§l| §cInvalid tree type specified.");
+                            sender.sendMessage("§a§l| §aAvailable tree types: oak, spruce, birch, acacia, dark_oak");
+                            return true;
+                        }
+                        saveConfig();
+                    } else {
+                        sender.sendMessage("Usage: /treechopper type <tree_type>");
+                    }
+                    break;
+
                 default:
-                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward>");
+                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type>");
             }
             return true;
         }
@@ -119,8 +187,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 List<String> suggestions = new ArrayList<>();
                 String input = args[0].toLowerCase();
 
-                // Add subcommand suggestions based on input
-                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname", "reward");
+                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname", "reward", "type");
                 for (String subCommand : subCommands) {
                     if (subCommand.startsWith(input)) {
                         suggestions.add(subCommand);
@@ -141,7 +208,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
             World world = event.getBlock().getWorld();
             String eventName = worldName.equalsIgnoreCase(world.getName()) ? worldName : "default";
 
-            if(!event.getPlayer().hasPermission("TreeChopper.ChopRewards") && isLog(block.getType()) && world.getName().equalsIgnoreCase(eventName)){
+            if (!event.getPlayer().hasPermission("TreeChopper.ChopRewards") && isLog(block.getType()) && world.getName().equalsIgnoreCase(eventName)) {
                 event.getPlayer().sendMessage("§c§l| You don't have permission to do this.");
                 return;
             }
@@ -160,7 +227,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                     counter--;
                     pillarCounters.put(bottomLocation, counter);
                     getServer().getScheduler().runTaskLater(this, () -> {
-                        event.getBlock().setType(Material.SPRUCE_LOG);
+                        event.getBlock().setType(Material.getMaterial(MainTypeLog));
                     }, 2);
                     if (counter == 0) {
                         String Player = event.getPlayer().getName();
@@ -171,7 +238,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
 
 
                         getServer().getScheduler().runTaskLater(this, () -> {
-                            event.getBlock().setType(Material.SPRUCE_LOG);
+                            event.getBlock().setType(Material.getMaterial(MainTypeLog));
                         }, 2);
 
                         getServer().getScheduler().runTaskLater(this, () -> {
@@ -189,7 +256,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                 for (int yOffset = -height; yOffset <= height; yOffset++) {
                                     for (int zOffset = -radius; zOffset <= radius; zOffset++) {
                                         Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
-                                        if (relativeBlock.getType() == Material.SPRUCE_LEAVES) {
+                                        if (relativeBlock.getType() == Material.getMaterial(MainTypeLeaves)) {
 
                                             float x = xRangeMin + (float) Math.random() * (xRangeMax - xRangeMin);
                                             float y = yRangeMin + (float) Math.random() * (yRangeMax - yRangeMin);
@@ -211,7 +278,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                 for (int yOffset = -height1; yOffset <= height1; yOffset++) {
                                     for (int zOffset = -radius1; zOffset <= radius1; zOffset++) {
                                         Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
-                                        if (relativeBlock.getType() == Material.SPRUCE_LOG) {
+                                        if (relativeBlock.getType() == Material.getMaterial(MainTypeLog)) {
                                             event.setDropItems(false);
                                             float x = xRangeMin + (float) Math.random() * (xRangeMax - xRangeMin);
                                             float y = yRangeMin + (float) Math.random() * (yRangeMax - yRangeMin);
@@ -233,7 +300,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                     for (int yOffset = -height; yOffset <= height; yOffset++) {
                                         for (int zOffset = -radiusclr; zOffset <= radiusclr; zOffset++) {
                                             Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
-                                            if (relativeBlock.getType() == Material.SPRUCE_LEAVES) {
+                                            if (relativeBlock.getType() == Material.getMaterial(MainTypeLeaves)) {
                                                 relativeBlock.setType(Material.AIR);
                                             }
                                         }
@@ -243,7 +310,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                                     for (int yOffset = -height; yOffset <= height; yOffset++) {
                                         for (int zOffset = -radiusclr2; zOffset <= radiusclr2; zOffset++) {
                                             Block relativeBlock = block.getRelative(xOffset, yOffset, zOffset);
-                                            if (relativeBlock.getType() == Material.SPRUCE_LOG) {
+                                            if (relativeBlock.getType() == Material.getMaterial(MainTypeLog)) {
                                                 relativeBlock.setType(Material.AIR);
                                             }
                                         }
@@ -272,16 +339,15 @@ public final class TreeChop extends JavaPlugin implements Listener {
         World world = event.getBlock().getWorld();
         String eventName = worldName.equalsIgnoreCase(world.getName()) ? worldName : "default";
 
-        if (block.getType() == Material.SPRUCE_LEAVES && world.getName().equalsIgnoreCase(eventName)) {
+        if (block.getType() == Material.getMaterial(MainTypeLeaves) && world.getName().equalsIgnoreCase(eventName)) {
             // Check if the block below is solid
             Block blockBelow = block.getLocation().subtract(0, 1, 0).getBlock();
-            if (blockBelow.getType().isSolid() && blockBelow.getType() != Material.SPRUCE_LEAVES && blockBelow.getType() != Material.SPRUCE_LOG) {
+            if (blockBelow.getType().isSolid() && blockBelow.getType() != Material.getMaterial(MainTypeLeaves) && blockBelow.getType() != Material.getMaterial(MainTypeLog)) {
                 event.setCancelled(true);
                 block.setType(Material.AIR);
             }
         }
     }
-
 
 
     private void makeLeavesFall(Location location) {
@@ -291,7 +357,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 for (int zOffset = -4; zOffset <= 4; zOffset++) {
                     Location checkLocation = location.clone().add(xOffset, yOffset, zOffset);
                     Block block = checkLocation.getBlock();
-                    if (block.getType() == Material.SPRUCE_LEAVES) {
+                    if (block.getType() == Material.getMaterial(MainTypeLeaves)) {
                         fallenLeaves.add(checkLocation);
                     }
                 }
@@ -307,7 +373,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 for (int zOffset = -4; zOffset <= 4; zOffset++) {
                     Location checkLocation = location.clone().add(xOffset, yOffset, zOffset);
                     Block block = checkLocation.getBlock();
-                    if (block.getType() == Material.SPRUCE_LOG) {
+                    if (block.getType() == Material.getMaterial(MainTypeLog)) {
                         fallenLogs.add(checkLocation);
                     }
                 }
@@ -321,7 +387,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
         if (fallenLeaves != null) {
             getServer().getScheduler().runTaskLater(this, () -> {
                 for (Location leafLocation : fallenLeaves) {
-                    leafLocation.getBlock().setType(Material.SPRUCE_LEAVES);
+                    leafLocation.getBlock().setType(Material.getMaterial(MainTypeLeaves));
                 }
                 fallenLeavesMap.remove(location);
             }, 100);
@@ -333,7 +399,8 @@ public final class TreeChop extends JavaPlugin implements Listener {
         if (fallenLogs != null) {
             getServer().getScheduler().runTaskLater(this, () -> {
                 for (Location logLocation : fallenLogs) {
-                    logLocation.getBlock().setType(Material.SPRUCE_LOG);
+//                    logLocation.getBlock().setType(Material.SPRUCE_LOG);
+                    logLocation.getBlock().setType(Material.getMaterial(MainTypeLog));
                 }
                 fallenLogsMap.remove(location);
             }, 100);
@@ -341,12 +408,13 @@ public final class TreeChop extends JavaPlugin implements Listener {
     }
 
     private Location getBottomLocation(Location location) {
-        while (location.getBlock().getType() == Material.SPRUCE_LOG) {
+        while (location.getBlock().getType() == Material.getMaterial(MainTypeLog)) {
             location.subtract(0, 1, 0);
         }
         location.add(0, 1, 0);
         return location;
     }
+
     private int countLogsAbove(Location location, Material logType) {
         int count = 0;
         Location checkLocation = location.clone().add(0, 1, 0); // Start checking one block above
@@ -372,7 +440,8 @@ public final class TreeChop extends JavaPlugin implements Listener {
     }
 
     private boolean isLog(Material material) {
-        return material == Material.SPRUCE_LOG;
+//        return material == Material.SPRUCE_LOG;
+        return material.toString().equals(MainTypeLog);
     }
 
     private void loadConfig() {
@@ -391,7 +460,8 @@ public final class TreeChop extends JavaPlugin implements Listener {
         FileConfiguration config = getConfig();
         isEnabled = config.getBoolean("enabled", true);
         worldName = config.getString("worldName", "lobby");
-        rewardAmount = config.getInt("rewardAmount", 50); // Load reward amount with default value
+        treetype = config.getString("treetype", "spruce");
+        rewardAmount = config.getInt("rewardAmount", 50);
     }
 
     public void saveConfig() {
@@ -399,6 +469,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
         config.set("enabled", isEnabled);
         config.set("worldName", worldName);
         config.set("rewardAmount", rewardAmount);
+        config.set("treetype", treetype);
 
         try {
             config.save(new File(getDataFolder(), "config.yml"));

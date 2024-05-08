@@ -9,9 +9,9 @@
 
 
 
-# Tree Chop
+# Tree Chop v1.0.3
 
-Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with spruce trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
+Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
 
 # Requirements
 - [EssentialsX](https://essentialsx.net/)
@@ -19,27 +19,27 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 
 # Key Features:
 
-- **Dynamic Countdown Mechanism**: The plugin tracks the number of logs in a spruce tree and initiates a countdown when any log is broken, providing an engaging and immersive experience for players.
+- **Dynamic Countdown Mechanism**: The plugin tracks the number of logs in a tree and initiates a countdown when any log is broken, providing an engaging and immersive experience for players.
 - **Rewarding Experience**: Upon completion of the countdown, players are rewarded for their efforts, adding incentive and satisfaction to the chopping process.
-- **Immersive Animation**: Enjoy a visually captivating tree falling animation that enhances the realism and excitement of chopping down spruce trees.
+- **Immersive Animation**: Enjoy a visually captivating tree falling animation that enhances the realism and excitement of chopping down of trees.
 - **Automatic Respawn**: After the tree falls, it automatically respawns after a brief 5-second interval, allowing for continuous gameplay and interaction.
 
 
 # Commands
 
-### 1 /treechopper enable
+## 1 /treechopper enable
 - **Description:** Enables the TreeChopper feature for spruce trees.
 - **Usage:** `/treechopper enable`
 
-### 2 /treechopper disable
+## 2 /treechopper disable
 - **Description:** Disables the TreeChopper feature for spruce trees.
 - **Usage:** `/treechopper disable`
 
-### 3 /treechopper forcestop
+## 3 /treechopper forcestop
 - **Description:** Stops the TreeChop plugin completely.
 - **Usage:** `/treechopper forcestop`
 
-### 4 /treechopper worldname [world_name]
+## 4 /treechopper worldname [world_name]
 - **Description:** Sets the name of the world in which plugin will work.
 - **Usage:** `/treechopper worldname <world_name>`
 #### 4.1 example:
@@ -47,22 +47,46 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 - 4.1.2 `/treechopper worldname world` sets world in which plugin will work to **world**
 - 4.1.3 `/treechopper worldname myworld` sets world in which plugin will work to **myworld**
 
-### 5 /treechopper reward [amount]
+## 5 /treechopper reward [amount]
 - **Description:** Sets the amount of money Players will receive.
 - **Usage:** `/treechopper reward <amount>`
 #### 5.1 example:
 - 5.1.1 `/treechopper reward 50` sets the reward amount player will receive to **50**
 - 5.1.2 `/treechopper reward 150` sets the reward amount player will receive to **150**
 
+
+## 6 /treechopper type [tree_type]
+- **Description:** Sets the type of the tree the plugin will work on.
+- **Usage:** `/treechopper type <tree_type>`
+#### 6.1 example:
+
+- 6.1.1 `/trechopper type oak` Sets the tree type to oak (OAK_LEAVES, OAK_LOGS)
+- 6.1.2 `/trechopper type acacia` Sets the tree type to acacia (ACACIA_LEAVES, ACACIA_LOGS)
+
+# Tree Types
+The plugin suports the following mentioned tree types, this includes the whole tree custom or default
+
+
+### Supported Types
+- Oak
+- Spruce
+- Acacia
+- Dark_Oak
+- Birch
+
+### Unsupported 
+- Jungle
+
 # Permission
 You need to use a permissions plugin such as luckperms to handle permission otherwise it won't work.
 
 - ```TreeChopper.ChopRewards``` Grants player access to chop trees and get rewards.
+- ```TreeChopper.Command``` Grants non op players to use plugin related commands.
 
 
 # How it works
 
-- **Chop a Spruce Tree**: Players simply chop a spruce tree as they would in the game.
+- **Chop a  Tree**: Players simply chop a  tree as they would in the game.
 - **Countdown Initiation**: Breaking any log in the spruce tree triggers a countdown based on the total number of logs in the tree.
 - **Reward and Animation**: Upon countdown completion, players are rewarded, and a stunning tree falling animation ensues, heightening the immersive gameplay experience.
 - **Automatic Respawn**: After a short delay, the spruce tree respawns, ready to be chopped again, restarting the countdown process.

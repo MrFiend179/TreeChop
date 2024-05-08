@@ -21,3 +21,9 @@ commands:
   worldname:
     description: "Set the world name for TreeChopper."
     usage: "/treechopper worldname <name>"
+  reward:
+    description: "Set the reward amount for TreeChopper."
+    usage: "/treechopper reward <reward_amount>"
+  type:
+    description: "Set the tree type for TreeChopper."
+    usage: "/treechopper type <tree_type>"
