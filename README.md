@@ -9,7 +9,7 @@
 
 
 
-# Tree Chop v1.0.3
+# Tree Chop v1.0.4
 
 Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
 

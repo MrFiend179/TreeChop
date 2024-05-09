@@ -38,7 +38,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.3             #");
+        getLogger().info("#             Tree Chopper v1.0.4             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -76,7 +76,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.3             #");
+        getLogger().info("#             Tree Chopper v1.0.4             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
