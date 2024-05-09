@@ -93,7 +93,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 return true;
             }
             if (args.length == 0) {
-                sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward>");
+                sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type>");
                 return true;
             }
             String subCommand = args[0].toLowerCase();
@@ -111,6 +111,10 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 case "forcestop":
                     setEnabled(false);
                     sender.sendMessage("§c§l| TreeChopper Stopped Forcefully.");
+                    break;
+                case "info":
+                    sender.sendMessage("§6§l| §6Plugin mde by §c§lMrFiend179 at Flubel");
+                    sender.sendMessage("§6§l| §ahttps://flubel.tech");
                     break;
                 case "worldname":
                     if (args.length >= 2) {
@@ -201,13 +205,12 @@ public final class TreeChop extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        World world = event.getBlock().getWorld();
+        String eventName = worldName.equalsIgnoreCase(world.getName()) ? worldName : "default";
         Block block = event.getBlock();
-        if (!isEnabled) {
+        if (!isEnabled && isLog(block.getType()) && world.getName().equalsIgnoreCase(eventName)) {
             System.out.println("Plugin Disabled!");
         } else {
-            World world = event.getBlock().getWorld();
-            String eventName = worldName.equalsIgnoreCase(world.getName()) ? worldName : "default";
-
             if (!event.getPlayer().hasPermission("TreeChopper.ChopRewards") && isLog(block.getType()) && world.getName().equalsIgnoreCase(eventName)) {
                 event.getPlayer().sendMessage("§c§l| You don't have permission to do this.");
                 return;
