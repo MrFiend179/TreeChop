@@ -9,9 +9,11 @@
 
 
 
-# Tree Chop v1.0.4
+# Tree Chop v1.0.5
 
 Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
+
+**Minecraft 1.18.2 - 1.20.4**
 
 # Requirements
 - [EssentialsX](https://essentialsx.net/)
@@ -63,6 +65,15 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 - 6.1.1 `/trechopper type oak` Sets the tree type to oak (OAK_LEAVES, OAK_LOGS)
 - 6.1.2 `/trechopper type acacia` Sets the tree type to acacia (ACACIA_LEAVES, ACACIA_LOGS)
 
+
+## 7 /treechopper enablelogrewards
+- **Description:** Enables the Log rewarding feature which gives players logs of the tree type selected.
+- **Usage:** `/treechopper enablelogrewards`
+
+## 8 /treechopper disablelogrewards
+- **Description:** Enables the Log rewarding feature which gives players logs of the tree type selected.
+- **Usage:** `/treechopper disablelogrewards`
+
 # Tree Types
 The plugin suports the following mentioned tree types, this includes the whole tree custom or default
 
@@ -94,11 +105,16 @@ You need to use a permissions plugin such as luckperms to handle permission othe
 
 # Rewards
 The rewards are given when a spruce tree is broken succesfully, after which a console command is issue which gives the player money using essentialsX economy
+Along with money players can also get logs as rewards of the tree type that is set.
 
 `eco give %player% <reward_amount>`
 
-Every player gets **$50** for chopping a tree succesfully by default. It can be changed via config or command.
+`give %player% %tree_type_selected% %amount%`
 
+Every player gets **$50** and **5** logs for chopping a tree succesfully by default. It can be changed via config or command.
+
+### *Log Rewards
+By default the log reward option is disabled, make sure to enable it by command and modify the log amount rewarded to players in config (default 5). 
 # How to use
 - Install EssentialsX and TreeChop and put them in your plugins folder
 - Restart your server

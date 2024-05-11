@@ -25,8 +25,11 @@ public final class TreeChop extends JavaPlugin implements Listener {
     private String worldName = "";
     private int rewardAmount = 50;
     private String treetype = "";
+    private String logtypesmall = "";
     private String MainTypeLog = "";
     private String MainTypeLeaves = "";
+    private boolean isRewarded = false;
+    private int LogRewards = 5;
     private final Map<Location, Integer> pillarCounters = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLeavesMap = new HashMap<>();
     private final Map<Location, Set<Location>> fallenLogsMap = new HashMap<>();
@@ -38,7 +41,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.4             #");
+        getLogger().info("#             Tree Chopper v1.0.5             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -50,24 +53,29 @@ public final class TreeChop extends JavaPlugin implements Listener {
         if (Objects.equals(treetype, "oak")) {
             MainTypeLog = "OAK_LOG";
             MainTypeLeaves = "OAK_LEAVES";
+            logtypesmall = "oak_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "spruce")) {
             MainTypeLog = "SPRUCE_LOG";
             MainTypeLeaves = "SPRUCE_LEAVES";
+            logtypesmall = "spruce_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "birch")) {
             MainTypeLog = "BIRCH_LOG";
             MainTypeLeaves = "BIRCH_LEAVES";
+            logtypesmall = "birch_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "jungle")) {
             getLogger().info("----------------(Jungle tree type is not supported.)----------------");
         } else if (Objects.equals(treetype, "acacia")) {
             MainTypeLog = "ACACIA_LOG";
             MainTypeLeaves = "ACACIA_LEAVES";
+            logtypesmall = "acacia_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "dark_oak")) {
             MainTypeLog = "DARK_OAK_LOG";
             MainTypeLeaves = "DARK_OAK_LEAVES";
+            logtypesmall = "dark_oak_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         }
     }
@@ -76,7 +84,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.4             #");
+        getLogger().info("#             Tree Chopper v1.0.5             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -93,7 +101,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 return true;
             }
             if (args.length == 0) {
-                sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type>");
+                sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type|info|enable/disablelogrewards>");
                 return true;
             }
             String subCommand = args[0].toLowerCase();
@@ -106,6 +114,16 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 case "disable":
                     isEnabled = false;
                     sender.sendMessage("§c§l| TreeChopper disabled.");
+                    saveConfig();
+                    break;
+                case "enablelogrewards":
+                    isRewarded = true;
+                    sender.sendMessage("§a§l| TreeChopper Log Rewards Enabled.");
+                    saveConfig();
+                    break;
+                case "disablelogrewards":
+                    isRewarded = false;
+                    sender.sendMessage("§c§l| TreeChopper Log Rewards Disabled.");
                     saveConfig();
                     break;
                 case "forcestop":
@@ -144,14 +162,17 @@ public final class TreeChop extends JavaPlugin implements Listener {
                         if (Objects.equals(treetype, "oak")) {
                             MainTypeLog = "OAK_LOG";
                             MainTypeLeaves = "OAK_LEAVES";
+                            logtypesmall = "oak_log";
                             sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
                         } else if (Objects.equals(treetype, "spruce")) {
                             MainTypeLog = "SPRUCE_LOG";
                             MainTypeLeaves = "SPRUCE_LEAVES";
+                            logtypesmall = "spruce_log";
                             sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
                         } else if (Objects.equals(treetype, "birch")) {
                             MainTypeLog = "BIRCH_LOG";
                             MainTypeLeaves = "BIRCH_LEAVES";
+                            logtypesmall = "birch_log";
                             sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
                         } else if (Objects.equals(treetype, "jungle")) {
                             sender.sendMessage("§c§l| §cJungle trees are not supported.");
@@ -160,10 +181,12 @@ public final class TreeChop extends JavaPlugin implements Listener {
                             MainTypeLog = "ACACIA_LOG";
                             MainTypeLeaves = "ACACIA_LEAVES";
                             sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                            logtypesmall = "acacia_log";
                         } else if (Objects.equals(treetype, "dark_oak")) {
                             MainTypeLog = "DARK_OAK_LOG";
                             MainTypeLeaves = "DARK_OAK_LEAVES";
                             sender.sendMessage("§a§l| §aTreeChopper tree type set to: §6§l" + treetype);
+                            logtypesmall = "dark_oak_log";
                         } else {
                             sender.sendMessage("§c§l| §cInvalid tree type specified.");
                             sender.sendMessage("§a§l| §aAvailable tree types: oak, spruce, birch, acacia, dark_oak");
@@ -176,7 +199,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                     break;
 
                 default:
-                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type>");
+                    sender.sendMessage("Usage: /treechopper <enable|disable|worldname|reward|type|info|enable/disablelogrewards>");
             }
             return true;
         }
@@ -191,7 +214,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                 List<String> suggestions = new ArrayList<>();
                 String input = args[0].toLowerCase();
 
-                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname", "reward", "type");
+                List<String> subCommands = Arrays.asList("enable", "disable", "forcestop", "worldname", "reward", "type","disablelogrewards","enablelogrewards");
                 for (String subCommand : subCommands) {
                     if (subCommand.startsWith(input)) {
                         suggestions.add(subCommand);
@@ -235,8 +258,14 @@ public final class TreeChop extends JavaPlugin implements Listener {
                     if (counter == 0) {
                         String Player = event.getPlayer().getName();
                         int rewardamountplr = rewardAmount;
-                        getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " " + rewardamountplr);
-//                        getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " 60");
+                        int logrewardamnt = LogRewards;
+                        if(isRewarded){
+                            getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " " + rewardamountplr);
+                            event.getPlayer().sendMessage("§6§l| §fYou've received §6" + logrewardamnt + " " + MainTypeLog + " §ffor successfully chopping a tree");
+                            getServer().dispatchCommand(getServer().getConsoleSender(), "give " + Player + " " + logtypesmall + " " + logrewardamnt);
+                        }else{
+                            getServer().dispatchCommand(getServer().getConsoleSender(), "eco give " + Player + " " + rewardamountplr);
+                        }
                         pillarCounters.remove(bottomLocation);
 
 
@@ -462,17 +491,21 @@ public final class TreeChop extends JavaPlugin implements Listener {
         // Load config from file
         FileConfiguration config = getConfig();
         isEnabled = config.getBoolean("enabled", true);
+        isRewarded = config.getBoolean("rewardsEnable", false);
         worldName = config.getString("worldName", "lobby");
         treetype = config.getString("treetype", "spruce");
         rewardAmount = config.getInt("rewardAmount", 50);
+        LogRewards = config.getInt("LogRewards", 5);
     }
 
     public void saveConfig() {
         FileConfiguration config = getConfig();
         config.set("enabled", isEnabled);
+        config.set("rewardsEnable", isRewarded);
         config.set("worldName", worldName);
         config.set("rewardAmount", rewardAmount);
         config.set("treetype", treetype);
+        config.set("LogRewards", LogRewards);
 
         try {
             config.save(new File(getDataFolder(), "config.yml"));
