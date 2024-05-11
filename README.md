@@ -71,7 +71,7 @@ Make tree chopping rewarding in Minecraft servers with this plugin. This is a si
 - **Usage:** `/treechopper enablelogrewards`
 
 ## 8 /treechopper disablelogrewards
-- **Description:** Enables the Log rewarding feature which gives players logs of the tree type selected.
+- **Description:** Disables the Log rewarding feature which gives players logs of the tree type selected.
 - **Usage:** `/treechopper disablelogrewards`
 
 # Tree Types
