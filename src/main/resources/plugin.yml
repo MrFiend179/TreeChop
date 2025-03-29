@@ -1,10 +1,11 @@
 name: TreeChop
 version: '${project.version}'
 main: mc.treechop.treechop.TreeChop
-api-version: 1.18
+api-version: 1.21
 authors: [ MrFiend179 ]
+depend: [WorldGuard]
 description: chops tree maintainer
-website: flubel.tech
+website: flubel.com
 commands:
   treechopper:
     description: "Enable or disable TreeChopper or set world name."

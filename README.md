@@ -9,7 +9,7 @@
 
 
 
-# Tree Chop v1.0.5
+# Tree Chop v1.1.0
 
 Make tree chopping rewarding in Minecraft servers with this plugin. This is a simple yet effective addition to your server that incentivizes players to engage with trees by rewarding them with in-game currency (essentialsX economy). Whether you're looking to encourage resource gathering or simply add a fun twist to gameplay, this plugin offers a seamless solution.
 
@@ -84,8 +84,6 @@ The plugin suports the following mentioned tree types, this includes the whole t
 - Acacia
 - Dark_Oak
 - Birch
-
-### Unsupported 
 - Jungle
 
 # Permission
@@ -126,4 +124,4 @@ By default the log reward option is disabled, make sure to enable it by command 
 For any assistance You can join our discord server or contact me on discord ```fiend6998```.
 
 - [Discord](https://discord.com/invite/Ga4pHSEcjK)
-- [Website](https://www.flubel.tech/)
+- [Website](https://www.flubel.com/)

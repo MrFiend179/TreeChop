@@ -41,7 +41,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.5             #");
+        getLogger().info("#             Tree Chopper v1.1.0             #");
         getLogger().info("#               Status: Started               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -66,7 +66,10 @@ public final class TreeChop extends JavaPlugin implements Listener {
             logtypesmall = "birch_log";
             getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "jungle")) {
-            getLogger().info("----------------(Jungle tree type is not supported.)----------------");
+            MainTypeLog = "JUNGLE_LOG";
+            MainTypeLeaves = "JUNGLE_LEAVES";
+            logtypesmall = "jungle_log";
+            getLogger().info("----------------(Tree type is "+ treetype +")----------------");
         } else if (Objects.equals(treetype, "acacia")) {
             MainTypeLog = "ACACIA_LOG";
             MainTypeLeaves = "ACACIA_LEAVES";
@@ -84,7 +87,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
     public void onDisable() {
         getLogger().info("###############################################");
         getLogger().info("#                                             #");
-        getLogger().info("#             Tree Chopper v1.0.5             #");
+        getLogger().info("#             Tree Chopper v1.1.0             #");
         getLogger().info("#               Status: Stopped               #");
         getLogger().info("#                Made by Fiend                #");
         getLogger().info("#                                             #");
@@ -132,7 +135,7 @@ public final class TreeChop extends JavaPlugin implements Listener {
                     break;
                 case "info":
                     sender.sendMessage("§6§l| §6Plugin mde by §c§lMrFiend179 at Flubel");
-                    sender.sendMessage("§6§l| §ahttps://flubel.tech");
+                    sender.sendMessage("§6§l| §ahttps://web.flubel.com");
                     break;
                 case "worldname":
                     if (args.length >= 2) {
